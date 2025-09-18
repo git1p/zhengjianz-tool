@@ -16,10 +16,10 @@ from urllib.parse import urlparse
 app = Flask(__name__)
 CORS(app)  # 允许所有跨域请求
 
-# 火山引擎API配置
+# 火山引擎API配置 - 使用环境变量
 API_CONFIG = {
     'endpoint': 'https://ark.cn-beijing.volces.com/api/v3/images/generations',
-    'api_key': '70342b5a-147b-4bd0-9677-1739306b1f33',
+    'api_key': os.getenv('API_KEY', 'your-api-key-here'),
     'model': 'doubao-seedream-4-0-250828'
 }
 
@@ -37,6 +37,13 @@ def tool_page():
 def generate_image():
     """代理API调用 - 生成换装证件照"""
     try:
+        # 检查API密钥
+        if API_CONFIG['api_key'] == 'your-api-key-here':
+            return jsonify({
+                'success': False,
+                'error': 'API密钥未配置，请联系管理员'
+            }), 500
+        
         # 获取请求数据
         data = request.get_json()
         
@@ -66,7 +73,9 @@ def generate_image():
         }
         
         print(f"正在调用火山引擎API...")
-        print(f"请求数据: {json.dumps(api_request, indent=2, ensure_ascii=False)}")
+        # 不打印敏感信息
+        safe_request = {k: v for k, v in api_request.items() if k != 'image'}
+        print(f"请求数据: {json.dumps(safe_request, indent=2, ensure_ascii=False)}")
         
         response = requests.post(
             API_CONFIG['endpoint'],
@@ -76,7 +85,8 @@ def generate_image():
         )
         
         print(f"API响应状态码: {response.status_code}")
-        print(f"API响应内容: {response.text[:500]}...")
+        # 不打印完整响应内容
+        print(f"API响应长度: {len(response.text)} 字符")
         
         if response.status_code == 200:
             result = response.json()
@@ -112,7 +122,7 @@ def health_check():
     return jsonify({
         'status': 'ok',
         'message': '代理服务器运行正常',
-        'api_endpoint': API_CONFIG['endpoint']
+        'api_configured': API_CONFIG['api_key'] != 'your-api-key-here'
     })
 
 if __name__ == '__main__':
