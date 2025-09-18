@@ -15,12 +15,44 @@ API_CONFIG = {
 @app.route('/')
 def index():
     """主页 - 重定向到工具页面"""
-    return app.send_static_file('zhengjianz-tool.html')
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>证件照换装工具</title>
+        <meta http-equiv="refresh" content="0; url=/zhengjianz-tool.html">
+    </head>
+    <body>
+        <p>正在跳转到工具页面...</p>
+        <p><a href="/zhengjianz-tool.html">点击这里进入工具</a></p>
+    </body>
+    </html>
+    '''
 
 @app.route('/zhengjianz-tool.html')
 def tool_page():
     """证件照工具页面"""
-    return app.send_static_file('zhengjianz-tool.html')
+    # 读取HTML文件内容
+    try:
+        with open('zhengjianz-tool.html', 'r', encoding='utf-8') as f:
+            content = f.read()
+        return content
+    except FileNotFoundError:
+        return '''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>证件照换装工具</title>
+        </head>
+        <body>
+            <h1>证件照换装工具</h1>
+            <p>工具页面正在加载中...</p>
+            <p>如果长时间无法加载，请联系管理员。</p>
+        </body>
+        </html>
+        '''
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
