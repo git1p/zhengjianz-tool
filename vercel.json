@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "proxy-server.py",
+      "src": "api/*.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "proxy-server.py"
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
