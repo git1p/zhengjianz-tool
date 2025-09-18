@@ -213,15 +213,51 @@ def tool_page():
                 return;
             }
             uploadedFile = file;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                originalPhoto.innerHTML = `<img src="${e.target.result}" alt="上传的照片">`;
-                uploadText.textContent = `已选择: ${file.name}`;
+            
+            // 压缩图片
+            compressImage(file, function(compressedDataUrl) {
+                originalPhoto.innerHTML = `<img src="${compressedDataUrl}" alt="上传的照片">`;
+                uploadText.textContent = `已选择: ${file.name} (已压缩)`;
                 generateBtn.textContent = '开始换装';
                 generateBtn.disabled = false;
-                uploadedImageUrl = e.target.result;
+                uploadedImageUrl = compressedDataUrl;
+            });
+        }
+        
+        function compressImage(file, callback) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                // 计算压缩后的尺寸
+                let { width, height } = img;
+                const maxSize = 1024; // 最大尺寸
+                
+                if (width > height) {
+                    if (width > maxSize) {
+                        height = (height * maxSize) / width;
+                        width = maxSize;
+                    }
+                } else {
+                    if (height > maxSize) {
+                        width = (width * maxSize) / height;
+                        height = maxSize;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                // 绘制压缩后的图片
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // 转换为base64，质量设置为0.8
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                callback(compressedDataUrl);
             };
-            reader.readAsDataURL(file);
+            
+            img.src = URL.createObjectURL(file);
         }
 
         async function generatePhoto() {
