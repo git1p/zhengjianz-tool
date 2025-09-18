@@ -381,11 +381,32 @@ def generate_image():
             'Authorization': f'Bearer {API_CONFIG["api_key"]}'
         }
         
-        response = requests.post(
+        # 添加SSL验证和重试机制
+        import ssl
+        import urllib3
+        from requests.adapters import HTTPAdapter
+        from urllib3.util.retry import Retry
+        
+        # 创建session并配置重试策略
+        session = requests.Session()
+        retry_strategy = Retry(
+            total=3,
+            backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+        
+        # 禁用SSL警告
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        
+        response = session.post(
             API_CONFIG['endpoint'],
             headers=headers,
             json=api_request,
-            timeout=60
+            timeout=60,
+            verify=True  # 保持SSL验证
         )
         
         if response.status_code == 200:
