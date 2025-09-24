@@ -1,39 +1,39 @@
-from flask import Flask, request, jsonify
-import requests
-import json
-import os
+fromfrom flask  flask importimport Flask, request, jsonify Flask, request, jsonify
+importimport requests requests
+importimport json json
+importimport os os
 
-app = Flask(__name__)
+app = app = FlaskFlask((((((__name____name__))))))
 
-# 火山引擎API配置
-API_CONFIG = {
-    'endpoint': 'https://ark.cn-beijing.volces.com/api/v3/images/generations',
-    'api_key': os.getenv('API_KEY', 'your-api-key-here'),
-    'model': 'doubao-seedream-4-0-250828'
-}
+# 火山引擎API配置# 火山引擎API配置
+API_CONFIG = API_CONFIG = {{{{{{
+    'endpoint''endpoint''endpoint''endpoint''endpoint''endpoint': : 'https://ark.cn-beijing.volces.com/api/v3/images/generations''https://ark.cn-beijing.volces.com/api/v3/images/generations''https://ark.cn-beijing.volces.com/api/v3/images/generations''https://ark.cn-beijing.volces.com/api/v3/images/generations''https://ark.cn-beijing.volces.com/api/v3/images/generations''https://ark.cn-beijing.volces.com/api/v3/images/generations',,
+    'api_key''api_key''api_key''api_key''api_key''api_key': os.: osososos.getenvgetenv(((((('API_KEY''API_KEY''API_KEY''API_KEY''API_KEY''API_KEY', , 'your-api-key-here''your-api-key-here''your-api-key-here''your-api-key-here''your-api-key-here''your-api-key-here'))))),,
+    'model''model''model''model''model''model': : 'doubao-seedream-4-0-250828''doubao-seedream-4-0-250828''doubao-seedream-4-0-250828''doubao-seedream-4-0-250828''doubao-seedream-4-0-250828''doubao-seedream-4-0-250828'
+}}}}}}
 
-@app.route('/')
-def index():
-    """主页 - 重定向到工具页面"""
-    return '''
+@@@@@@app.routeapp.route(((((('/''/''/''/''/''/'))))))
+defdef indexindex(((((())))))::
+    """主页 - 重定向到工具页面""""""主页 - 重定向到工具页面""""""主页 - 重定向到工具页面""""""主页 - 重定向到工具页面""""""主页 - 重定向到工具页面""""""主页 - 重定向到工具页面"""
+    returnreturn ''''''
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="UTF-8">
+        <metameta charset="UTF-8""UTF-8""UTF-8""UTF-8""UTF-8">
         <title>证件照换装工具</title>
-        <meta http-equiv="refresh" content="0; url=/zhengjianz-tool.html">
-    </head>
-    <body>
-        <p>正在跳转到工具页面...</p>
-        <p><a href="/zhengjianz-tool.html">点击这里进入工具</a></p>
-    </body>
-    </html>
-    '''
+        <meta http-equiv="refresh""refresh" content="0; url=/zhengjianz-tool.html">content="0; url=/zhengjianz-tool.html""0; url=/zhengjianz-tool.html""0; url=/zhengjianz-tool.html""0; url=/zhengjianz-tool.html">
+    </head>    </head>
+    <body>    <body>
+        <p>正在跳转到工具页面...</p>        <p>正在跳转到工具页面...</p>
+        <p><a href="/zhengjianz-tool.html""/zhengjianz-tool.html""/zhengjianz-tool.html""/zhengjianz-tool.html">点击这里进入工具</a></p>        <p><a href="/zhengjianz-tool.html""/zhengjianz-tool.html""/zhengjianz-tool.html""/zhengjianz-tool.html">点击这里进入工具</a></p>
+    </body>    </body>
+    </html>    </html>
+    '''    '''
 
-@app.route('/zhengjianz-tool.html')
-def tool_page():
-    """证件照工具页面 - 完全自包含版本"""
-    return '''<!DOCTYPE html>
+@app.routeapp.route(((('/zhengjianz-tool.html''/zhengjianz-tool.html''/zhengjianz-tool.html''/zhengjianz-tool.html'))))@app.routeapp.route(((('/zhengjianz-tool.html''/zhengjianz-tool.html''/zhengjianz-tool.html''/zhengjianz-tool.html'))))
+def tool_pagetool_page(((()))::defdef tool_page(((())))::
+    """证件照工具页面 - 完全自包含版本"""    """证件照工具页面 - 完全自包含版本""""""证件照工具页面 - 完全自包含版本""""""证件照工具页面 - 完全自包含版本""""""证件照工具页面 - 完全自包含版本"""
+    returnreturn '''    return ''''''    return ''''''    return ''''''    return '''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -439,3 +439,4 @@ def generate_image():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
