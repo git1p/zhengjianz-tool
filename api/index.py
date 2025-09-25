@@ -320,7 +320,7 @@ def tool_page():
                     prompt: prompt,
                     image: [uploadedImageUrl, uploadedClothingUrl],
                     background: selectedBackground,
-                    size: "768x1024",  // 3:4比例 (768/1024 = 0.75)
+                    size: "960x1280",  // 3:4比例 (960/1280 = 0.75) 满足最小921600像素要求
                     face_switch: true,
                     face_image: uploadedImageUrl,
                     face_style_switch: true,
