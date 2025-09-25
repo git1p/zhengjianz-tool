@@ -324,7 +324,6 @@ def tool_page():
                     face_switch: true,       // 开启人脸特征学习（核心）
                     face_image: uploadedImageUrl,   // 强制绑定图1的面部与发型特征
                     face_style_switch: true, // 同步锁定发型风格
-                    hyper_switch: true,      // 启用超分辨率细节保留
                     cfg_scale: 12,           // 增强约束强度（10-15效果最佳）
                     seed: -1                 // 固定随机种子确保一致性
                 };
