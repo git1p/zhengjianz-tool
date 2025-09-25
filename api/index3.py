@@ -305,7 +305,7 @@ def tool_page():
             showLoading(true);
             hideMessages();
             try {
-                const prompt = `将图1种的人物面部长相和发型特征提取出来，调整到证件照姿势(正对镜头，头部居中，双肩在镜头内，无任何手势，表情淡然),穿上图2的衣服，保持人物长相、发型（包括头发造型、位置、头发长短和发量）与图一一致，保持性别特征一致，生成一张标准的${selectedBackground}证件照（调整人物大小和位置到证件照的合理位置）`;
+                const prompt = `将图1中的人物面部长相和发型特征提取出来，调整到证件照姿势(正对镜头，头部居中，双肩在镜头内，无任何手势，表情淡然),穿上图2的衣服，保持人物长相、发型（包括头发造型、位置、头发长短和发量）与图一一致，保持性别特征一致，生成一张标准的${selectedBackground}证件照（调整人物大小和位置到证件照的合理位置）`;
                 const requestBody = {
                     prompt: prompt,
                     image: [uploadedImageUrl, uploadedClothingUrl], // 使用用户上传的服装或默认服装
